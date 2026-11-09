@@ -16,6 +16,7 @@ int main() {
     std::cout << "введите цену и количество: ";
     while(std::cin >> price >> count){
     sum = calc(sum,price,count,get_price);
-    std::cout << "стоимость: " << sum << "\n";}
+    }
+    std::cout << "стоимость: " << sum << "\n";
     return 0;
 }
