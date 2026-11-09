@@ -12,15 +12,15 @@ unsigned long long fact(int n) {
     return n * fact(n - 1);
 }
 
-void get_divisors(int n, int i, std::vector<int>& divs) {
+void get_divisors(int n, int i) {
     if (i > n) return;
     if (n % i == 0) {
-        divs.push_back(i);
+        std::cout<<i;
     }
-    get_divisors(n, i + 1, divs);
+    get_divisors(n, i + 1);
 }
 
-int main() {
+void main() {
     int n;
     std::cout << "введите число: ";
     std::cin >> n;
@@ -29,12 +29,12 @@ int main() {
     std::cout << "!: " << fact(n) << "\n";
     
     std::vector<int> divs;
-    get_divisors(n, 1, divs);
+    get_divisors(n, 1);
 
     std::cout << "делители " << n << ": ";
     for (int d : divs) {
         std::cout << d << " ";
     }
     std::cout << "\n";
-    return 0;
+    // return 0;
 }
