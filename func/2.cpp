@@ -1,41 +1,23 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-
 
 unsigned long long fibonacci(int n) {
     if (n <= 0) return 0;
     if (n == 1) return 1;
-    unsigned long long a = 0, b = 1;
-    for (int i = 2; i <= n; ++i) {
-        unsigned long long next = a + b;
-        a = b;
-        b = next;
-    }
-    return b;
+    return fibonacci(n - 1) + fibonacci(n - 2);
 }
 
 unsigned long long factorial(int n) {
-    unsigned long long res = 1;
-    for (int i = 2; i <= n; ++i) {
-        res *= i;
-    }
-    return res;
+    if (n <= 1) return 1;
+    return n * factorial(n - 1);
 }
 
-std::vector<int> get_divisors(int n) {
-    std::vector<int> divs;
-    if (n <= 0) return divs;
-    for (int i = 1; i * i <= n; ++i) {
-        if (n % i == 0) {
-            divs.push_back(i);
-            if (i * i != n) {
-                divs.push_back(n / i);
-            }
-        }
+void get_divisors(int n, int i, std::vector<int>& divs) {
+    if (i > n) return;
+    if (n % i == 0) {
+        divs.push_back(i);
     }
-    std::sort(divs.begin(), divs.end());
-    return divs;
+    get_divisors(n, i + 1, divs);
 }
 
 int main() {
@@ -46,8 +28,11 @@ int main() {
     std::cout << "фиб: " << fibonacci(n) << "\n";
     std::cout << "!: " << factorial(n) << "\n";
     
+    std::vector<int> divs;
+    get_divisors(n, 1, divs);
+
     std::cout << "делители " << n << ": ";
-    for (int d : get_divisors(n)) {
+    for (int d : divs) {
         std::cout << d << " ";
     }
     std::cout << "\n";
