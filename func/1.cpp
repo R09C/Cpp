@@ -1,15 +1,15 @@
 #include <iostream>
 
-bool is_leap_year(int year) {
+bool is_v_year(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
 }
 
 int main() {
     int year;
-    std::cout << "Введите год: ";
+    std::cout << "введите год: ";
     std::cin >> year;
 
-    if (is_leap_year(year)) {
+    if (is_v_year(year)) {
         std::cout << year << "высокосный год\n";
     } else {
         std::cout << year << "невысокосный год\n";
