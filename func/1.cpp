@@ -10,9 +10,9 @@ int main() {
     std::cin >> year;
 
     if (is_v_year(year)) {
-        std::cout << year << "высокосный год\n";
+        std::cout << year << " высокосный год\n";
     } else {
-        std::cout << year << "невысокосный год\n";
+        std::cout << year << " невысокосный год\n";
     }
     return 0;
 }
