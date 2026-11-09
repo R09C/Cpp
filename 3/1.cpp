@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 
 int main(){
@@ -17,5 +18,6 @@ int main(){
       ++i;
     }
   };
+  std::sort(vec.begin(),vec.end());
   for (int x : vec) std::cout << x << " ";
 }
