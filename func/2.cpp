@@ -20,7 +20,7 @@ void get_divisors(int n, int i) {
     get_divisors(n, i + 1);
 }
 
-void main() {
+int main() {
     int n;
     std::cout << "введите число: ";
     std::cin >> n;
