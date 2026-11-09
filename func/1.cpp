@@ -10,9 +10,9 @@ int main() {
     std::cin >> year;
 
     if (is_leap_year(year)) {
-        std::cout << year << "високосный год\n";
+        std::cout << year << "высокосный год\n";
     } else {
-        std::cout << year << "невисокосный год\n";
+        std::cout << year << "невысокосный год\n";
     }
     return 0;
 }
