@@ -1,7 +1,7 @@
 #include <iostream>
 #include <functional>
 
-double multiply(double price, int count) {
+double get_price(double price, int count) {
     return price * count;
 }
 
@@ -16,6 +16,6 @@ int main() {
     std::cout << "введите цену и количество: ";
     std::cin >> price >> count;
 
-    std::cout << "стоимость: " << calc(price, count, multiply) << "\n";
+    std::cout << "стоимость: " << calc(price, count, get_price) << "\n";
     return 0;
 }
