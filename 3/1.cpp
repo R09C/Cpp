@@ -1,63 +1,52 @@
-
-
-
-#include <utility>
-#include <vector>
+#include <array>
+#include <chrono>
+#include <cstddef>
+#include <cstdlib>
 #include <iostream>
-#include <algorithm>
 
+using namespace std;
 
+const size_t N = 10000;
+using Matrix = array<array<int, N>, N>;
+Matrix matrix;
 
-
-
-
-auto partiton(std::vector<int>& mass, int left, int right, int pivout) {
-  int i = left;
-  int j = right;
-  while (i <= j) {
-    while (i <= j and mass[j] > pivout) j--;
-    if (i <= j and mass[i] > pivout) {
-      std::swap(mass[i], mass[j]);
-      j--;
+long long sum_rows(const Matrix& a) {
+  long long sum = 0;
+  for (size_t i = 0; i < N; i++) {
+    for (size_t j = 0; j < N; j++) {
+      sum += a[i][j];
     }
-    i++;
   }
-  return j;
+  return sum;
 }
 
-void quick_sort(std::vector<int>& mass, int left, int right) {
-  if (left >= right) return;
-  std::swap(mass[left + (right - left) / 2], mass[right]);
-  int j = partiton(mass, left, right - 1, mass[right]);
-  std::swap(mass[j + 1], mass[right]);
-  quick_sort(mass, left, j);
-  quick_sort(mass, j + 2, right);
-}
-
-void quick_sort(std::vector<int>& mass) {
-  if (!mass.empty()) {
-    quick_sort(mass, 0, static_cast<int>(mass.size()) - 1);
-  }
-}
-
-
-
-
-
-
-int main(){
-  int raw[100];
-  std::vector<int> vec(raw,raw+100);
-  for (int x : vec) std::cout << x << " ";
-  std::cout << std::endl << std::endl;
-  
-  for(auto i = vec.begin();i!=vec.end();){
-    if (*i<0){i = vec.erase(i);}
-    else{
-      ++i;
+long long sum_columns(const Matrix& a) {
+  long long sum = 0;
+  for (size_t j = 0; j < N; j++) {
+    for (size_t i = 0; i < N; i++) {
+      sum += a[i][j];
     }
-  };
-  
-  quick_sort(vec);
-  for (int x : vec) std::cout << x << " ";
+  }
+  return sum;
+}
+
+int main() {
+#ifdef _WIN32
+  system("chcp 65001 > nul");
+#endif
+  for (size_t i = 0; i < N; i++) {
+    for (size_t j = 0; j < N; j++) {
+      matrix[i][j] = static_cast<int>(i + j);
+    }
+  }
+  auto t1 = chrono::steady_clock::now();
+  auto sum1 = sum_rows(matrix);
+  auto t2 = chrono::steady_clock::now();
+  cout << sum1 << " строки: " << chrono::duration<double>(t2 - t1).count()
+       << " c\n";
+  t1 = chrono::steady_clock::now();
+  auto sum2 = sum_columns(matrix);
+  t2 = chrono::steady_clock::now();
+  cout << sum2 << " столбцы: " << chrono::duration<double>(t2 - t1).count()
+       << " c\n";
 }

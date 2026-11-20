@@ -1,51 +1,46 @@
+
+#include <chrono>
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
+#include <string>
+
+
+using namespace std::chrono;
 
 using namespace std;
-
 int main() {
+#ifdef _WIN32
   system("chcp 65001 > nul");
-
-  int age, stock;
-  double total;
-  bool hasPromo, isBlocked, hasMarked;
-
-  cout << "Возраст клиента: ";
-  cin >> age;
-  cout << "Сумма корзины (руб): ";
-  cin >> total;
-  cout << "Есть промокод? (1 - да, 0 - нет): ";
-  cin >> hasPromo;
-  cout << "Аккаунт заблокирован? (1 - да, 0 - нет): ";
-  cin >> isBlocked;
-  cout << "Есть маркированные товары с возрастным цензом? (1 - да, 0 - нет): ";
-  cin >> hasMarked;
-  cout << "Остаток товара на складе: ";
-  cin >> stock;
-
-  if (isBlocked) {
-    cout << "Отказ: аккаунт заблокирован\n";
-    return 0;
+#endif
+  string name;
+  int d, m, y;
+  char dot1, dot2;
+  cout << "напиши свое имя: ";
+  if (!getline(cin, name) || name.empty()) return 1;
+  cout << "напиши дату рождения (дд.мм.гггг): ";
+  if (!(cin >> d >> dot1 >> m >> dot2 >> y) || dot1 != '.' || dot2 != '.' ||
+      d < 1 || d > 31 || m < 1 || m > 12 || y < 1 || y > 9999) {
+    cout << "неверная дата\n";
+    return 1;
   }
-  if (age < 18 && hasMarked) {
-    cout << "Отказ: пользователю меньше 18 лет, а в заказе есть маркированные "
-            "товары\n";
-    return 0;
-  }
-  if (stock <= 0) {
-    cout << "Отказ: нет позиций на складе\n";
-    return 0;
+  auto birth = year{y} / m / d;
+  auto now = time(nullptr);
+  const auto* local = localtime(&now);
+  if (local == nullptr) return 1;
+  int cur_year = local->tm_year + 1900;
+  int cur_month = local->tm_mon + 1;
+  int cur_day = local->tm_mday;
+  auto today = year{cur_year} / cur_month / cur_day;
+  if (!birth.ok() || birth > today) {
+    cout << "неверная дата\n";
+    return 1;
   }
 
-  double discount = 0;
-  if (total >= 10000)
-    discount = 0.15;
-  else if (total >= 5000 && hasPromo)
-    discount = 0.10;
-
-  double finalSum = total * (1 - discount);
-  cout << "Заказ оформлен\n";
-  cout << "Скидка: " << discount * 100 << "%\n";
-  cout << "Итого к оплате: " << finalSum << " руб\n";
+  int age = cur_year - y;
+  if (m > cur_month || (m == cur_month && d > cur_day))
+    age--;
+  cout << "привет, " << name << '\n';
+  cout << "тебе вот столько лет: " << age << '\n';
   return 0;
 }
