@@ -16,7 +16,7 @@ public:
   explicit Circle(double r) : radius(r) {}
 
   double area() const override {
-    return numbers::pi * radius * radius;
+    return 3.14 * radius * radius;
   }
 };
 
