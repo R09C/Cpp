@@ -46,10 +46,12 @@ void quick_sort(std::vector<int>& mass) {
 
 
 
-int main(){
+int main() {
   std::vector<int> vec = {7, -2, 0, 5, -8, 3, 5, 1};
-  auto last = std::remove_if(vec.begin(), vec.end(), [](int x){ return x < 0; });
-  vec.erase(last, vec.end());
+  if (!vec.empty()) {
+    int j = partiton(vec, 0, static_cast<int>(vec.size()) - 1, -1);
+    vec.erase(vec.begin(), vec.begin() + j + 1);
+  }
   quick_sort(vec);
   for (std::size_t i = 0; i < vec.size(); i++) {
     if (i != 0) std::cout << ' ';
